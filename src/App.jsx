@@ -6,6 +6,7 @@ import Info from "./components/Info";
 import Subtask from "./components/Subtask";
 import Markup from "./components/Markup";
 import Attachments from "./components/Attachments";
+import Stopwatch from "./components/Stopwatch";
 
 const App = () => {
   // Resizing Logic(Left and right div)
@@ -56,9 +57,21 @@ const App = () => {
 
         {/* Right Div */}
         <div
-          className="h-full bg-blue-300"
+          className="h-full  "
           style={{ width: `${100 - leftWidth}%` }}
-        />
+        >
+          <div className="h-[33.3%] flex justify-center items-center">
+            <Stopwatch />
+          </div>
+          <div className="bg-green-300 h-[33.3%]">
+
+          </div>
+
+          <div className="bg-yellow-300 h-[33.3%]">
+
+          </div>
+        </div>
+      
       </div>
     </>
   );
