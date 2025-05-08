@@ -57,19 +57,11 @@ const App = () => {
 
         {/* Right Div */}
         <div
-          className="h-full  "
+          className="h-full  overflow-y-auto bg-gray-100"
           style={{ width: `${100 - leftWidth}%` }}
         >
-          <div className="h-[33.3%] flex justify-center items-center">
             <Stopwatch />
-          </div>
-          <div className="bg-green-300 h-[33.3%]">
-
-          </div>
-
-          <div className="bg-yellow-300 h-[33.3%]">
-
-          </div>
+          
         </div>
       
       </div>
