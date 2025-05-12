@@ -1,7 +1,7 @@
 import { useState } from "react";
 import React from "react";
 
-const DropdownBar = () => {
+const DropdownBar = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
@@ -13,7 +13,12 @@ const DropdownBar = () => {
       >
         <div className="flex items-center">
           {isOpen ? (
-            <svg xmlns="http://www.w3.org/2000/svg" className="size-5" fill="currentColor" viewBox="0 0 20 20">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="size-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
               <path
                 fillRule="evenodd"
                 d="M9.47 6.47a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 1 1-1.06 1.06L10 8.06l-3.72 3.72a.75.75 0 0 1-1.06-1.06l4.25-4.25Z"
@@ -21,7 +26,12 @@ const DropdownBar = () => {
               />
             </svg>
           ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" className="size-5" fill="currentColor" viewBox="0 0 20 20">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="size-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
               <path
                 fillRule="evenodd"
                 d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
@@ -38,8 +48,19 @@ const DropdownBar = () => {
             setShowForm(true);
           }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="size-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
           </svg>
         </div>
       </div>
@@ -49,7 +70,11 @@ const DropdownBar = () => {
           isOpen ? "max-h-[320px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="mt-2 p-4 bg-gray-100 rounded-lg border border-gray-200">
+        <div
+          className={`mt-2 p-4 rounded-lg border border-gray-200 ${
+            theme === "dark" ? "bg-gray-800" : "bg-white"
+          }`}
+        >
           <form className="grid grid-cols-4 gap-4">
             {[
               ["Task ID:", "IQC-0000138"],
@@ -65,11 +90,11 @@ const DropdownBar = () => {
               ["Start Date:", "5/24/24"],
               ["End Date:", ""],
             ].map(([label, value], idx) => (
-              <div key={idx} className="text-gray-800">
+              <div key={idx} className={`${theme === "dark" ? "text-white" : "text-black"}`}>
                 {label}
                 <input
                   type="text"
-                  className="p-2 rounded-md w-full h-[30px] bg-white text-black  border border-gray-300"
+                  className="p-2 rounded-md w-full h-[30px] bg-white text-black border border-gray-300"
                   value={value}
                   disabled
                 />
@@ -78,14 +103,20 @@ const DropdownBar = () => {
           </form>
 
           <form className="grid grid-cols-2 gap-4 mt-4">
-            <div className="text-gray-800">
-              Due Date:
-              <input type="text" className="p-2 rounded-md w-full h-[30px] bg-white text-black border border-gray-300" value="4/3/25" disabled />
-            </div>
-            <div className="text-gray-800">
-              Manager Remark:
-              <input type="text" className="p-2 rounded-md w-full h-[30px] bg-white text-black border border-gray-300" value="N/A" disabled />
-            </div>
+            {[
+              ["Due Date:", "4/3/25"],
+              ["Manager Remark:", "N/A"],
+            ].map(([label, value], idx) => (
+              <div key={idx} className={`${theme === "dark" ? "text-white" : "text-black"}`}>
+                {label}
+                <input
+                  type="text"
+                  className="p-2 rounded-md w-full h-[30px] bg-white text-black border border-gray-300"
+                  value={value}
+                  disabled
+                />
+              </div>
+            ))}
           </form>
         </div>
       </div>
@@ -99,19 +130,23 @@ const DropdownBar = () => {
                 &times;
               </button>
             </div>
-            <form className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Task ID</label>
-                <input type="text" className="mt-1 w-full p-2 rounded-md border border-gray-300" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Job ID</label>
-                <input type="text" className="mt-1 w-full p-2 rounded-md border border-gray-300" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Manager Remark</label>
-                <textarea rows="3" className="mt-1 w-full p-2 rounded-md border border-gray-300"></textarea>
-              </div>
+            <form className={`space-y-4 ${theme === "dark" ? "bg-black" : "bg-transparent"}`}>
+              {[
+                ["Task ID", "text"],
+                ["Job ID", "text"],
+                ["Manager Remark", "textarea"],
+              ].map(([label, type], idx) => (
+                <div key={idx}>
+                  <label className={`block text-sm font-medium ${theme === "dark" ? "text-white" : "text-black"}`}>
+                    {label}
+                  </label>
+                  {type === "textarea" ? (
+                    <textarea rows="3" className="mt-1 w-full p-2 rounded-md border border-gray-300"></textarea>
+                  ) : (
+                    <input type="text" className="mt-1 w-full p-2 rounded-md border border-gray-300" />
+                  )}
+                </div>
+              ))}
               <div className="text-right">
                 <button
                   type="button"

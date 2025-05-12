@@ -11,10 +11,10 @@ const columns = [
   { key: "markupDeliveryStatus", label: "Delivery Status" },
 ];
 
-const ResizableTable = () => {
+const ResizableTable = ({ theme }) => {
   // Ref to store column elements for dynamic resizing
   const colRefs = useRef({});
-  
+
   // State to track column widths dynamically
   const [colWidths, setColWidths] = useState({});
 
@@ -34,13 +34,12 @@ const ResizableTable = () => {
       document.removeEventListener("mouseup", onMouseUp);
     };
 
-
     document.addEventListener("mousemove", onMouseMove);
     document.addEventListener("mouseup", onMouseUp);
   };
 
   return (
-    <div className="overflow-auto rounded-xl shadow-md">
+    <div className={`overflow-auto rounded-xl shadow-md`}>
       <table className="min-w-full text-sm text-left rounded-xl">
         <thead className="bg-blue-200 text-gray-700">
           <tr>
@@ -68,9 +67,9 @@ const ResizableTable = () => {
         </tbody>
       </table>
       {/* Placeholder message when there is no data */}
-      <div className="text-center mt-4 text-gray-500">no markup</div>
+      <div className="text-center mt-2 text-gray-500 bg-white">no markup</div>
     </div>
-  );
+  );  
 };
 
 export default ResizableTable;

@@ -25,12 +25,13 @@ const TimesheetDropdown = () => {
     const hours = Math.floor(ms / 3600000);
     const minutes = Math.floor((ms % 3600000) / 60000);
     const seconds = Math.floor((ms % 60000) / 1000);
-    const millis = Math.floor((ms % 1000) / 10);
-    return `${hours.toString().padStart(2, '0')}:${minutes
+    const milliseconds = ms % 1000;
+
+    return `${hours.toString().padStart(2, '0')}.${minutes
       .toString()
-      .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${millis
+      .padStart(2, '0')}.${seconds.toString().padStart(2, '0')}.${milliseconds
       .toString()
-      .padStart(2, '0')}`;
+      .padStart(3, '0')}`;
   };
 
   const handleToggle = () => {
@@ -52,37 +53,50 @@ const TimesheetDropdown = () => {
     }
   };
 
-// Progress ring styling
-const progress = (elapsed % 60000) / 60000 * 100;
-const circleStyle = {
-  background: `conic-gradient(#0074c1 ${progress * 3.6}deg, #d1eaff 0deg)`,
-};
-
-
+  const progress = (elapsed % 1000) / 1000 * 100;
+  const circleStyle = {
+    background: `conic-gradient(#ec4899 ${progress * 3.6}deg, #f3f4f6 0deg)`,
+  };
 
   return (
-    <div className="w-full mx-auto mt-6 relative flex flex-col items-center space-y-4">
-      {/* Stopwatch */}
-      <div className="relative w-48 h-48 rounded-full flex items-center justify-center" style={circleStyle}>
-      <div className="absolute w-40 h-40 bg-gradient-to-br from-gray-700 to-gray-900 rounded-full flex items-center justify-center text-white text-xl font-mono">
-
-          {formatTime(elapsed)}
+    <div className="w-full mx-auto mt-6 relative flex flex-col items-center space-y-6">
+      {/* Stopwatch and button inline */}
+      <div className="flex items-center bg-white rounded-full px-6 py-4 shadow space-x-8">
+        {/* Stopwatch Circle */}
+        <div
+          className="relative w-32 h-32 rounded-full flex items-center justify-center"
+          style={circleStyle}
+        >
+          <div className="absolute w-28 h-28 bg-white rounded-full flex items-center justify-center text-gray-800 text-xl font-mono tracking-tight">
+            {formatTime(elapsed)}
+          </div>
         </div>
-      </div>
 
-      {/* Toggle Button */}
-      <button
-        onClick={handleToggle}
-        className={`px-6 py-2 rounded text-white font-medium shadow-lg ${
-          isRunning ? "bg-red-600" : "bg-green-600"
-        }`}
-      >
-        {isRunning ? "Stop" : "Start"}
-      </button>
+        {/* Start/Stop Button */}
+        <button
+          onClick={handleToggle}
+          className={`w-12 h-12 flex items-center justify-center rounded-full transition duration-200 ${
+            isRunning
+              ? "bg-red-500 hover:bg-red-600"
+              : "bg-green-500 hover:bg-green-600"
+          }`}
+        >
+          {isRunning ? (
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <rect x="6" y="4" width="2" height="12" />
+              <rect x="12" y="4" width="2" height="12" />
+            </svg>
+          ) : (
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <polygon points="5,4 15,10 5,16" />
+            </svg>
+          )}
+        </button>
+      </div>
 
       {/* Toggle Bar */}
       <div
-        className="bg-sky-400 hover:bg-sky-500 text-white px-4 py-2 rounded-md flex justify-between items-center cursor-pointer shadow-md mt-6 w-full max-w-xl"
+        className="bg-sky-400 hover:bg-sky-500 text-white px-4 py-2 rounded-md flex justify-between items-center cursor-pointer shadow-md mt-2 w-full max-w-xl"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex items-center space-x-2">

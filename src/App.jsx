@@ -52,7 +52,7 @@ const App = () => {
           className="overflow-y-auto bg-transparent"
           style={{
             width: "100%",
-            height: "50%",
+            height: "100%",
             ...(window.innerWidth >= 768 && {
               width: `${leftWidth}%`,
               height: "100%",
@@ -60,10 +60,10 @@ const App = () => {
           }}
         >
           <Bar theme={theme} />
-          <Info />
-          <Subtask />
-          <Markup />
-          <Attachments />
+          <Info theme={theme}/>
+          <Subtask theme={theme}/>
+          <Markup theme={theme}/>
+          <Attachments theme={theme}/>
         </div>
 
         {/* Resizer (only desktop) */}

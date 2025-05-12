@@ -1,7 +1,7 @@
 import { useState } from "react";
 import React from "react";
 
-const DropdownBar = () => {
+const DropdownBar = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -31,9 +31,9 @@ const DropdownBar = () => {
           isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="mt-2 p-3 bg-white border border-gray-200 rounded-md shadow-sm text-center">
+        <div className={`mt-2 p-3 border border-gray-200 rounded-md shadow-sm text-center ${theme === "light" ? "bg-gray-800" : "bg-black"}`}>
           {/* Placeholder for attachment content */}
-          <p className="text-gray-600 text-sm">No attachments available.</p>
+          <p className={`text-sm ${theme === "light" ? "text-gray-600" : "text-white"}`}>No attachments available.</p>
         </div>
       </div>
     </div>

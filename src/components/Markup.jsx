@@ -2,7 +2,7 @@ import { useState } from "react";
 import React from "react";
 import MarkupTable from './MarkupTable';
 
-const DropdownBar = () => {
+const DropdownBar = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -32,8 +32,8 @@ const DropdownBar = () => {
           isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="mt-2 p-3 bg-white border border-gray-200 rounded-md shadow-sm">
-          <MarkupTable />
+        <div className={`mt-2 p-3 border border-gray-200 rounded-md shadow-sm bg-black}`}>
+          <MarkupTable theme={theme}/> 
         </div>
       </div>
     </div>
