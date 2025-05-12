@@ -9,24 +9,33 @@ import Attachments from "./components/Attachments";
 import Stopwatch from "./components/Stopwatch";
 
 const App = () => {
-  // Resizing Logic(Left and right div)
-  const [leftWidth, setLeftWidth] = useState(50); 
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [leftWidth, setLeftWidth] = useState(50); // in %
   const isResizing = useRef(false);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (!isResizing.current) return;
-      const newWidth = (e.clientX / window.innerWidth) * 100;
-      if (newWidth > 20 && newWidth < 80) setLeftWidth(newWidth); 
+    const handleStorageChange = () => {
+      const updatedTheme = localStorage.getItem("theme");
+      if (updatedTheme) setTheme(updatedTheme);
     };
 
-    const handleMouseUp = () => {
-      isResizing.current = false;
-    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
+  const handleMouseMove = (e) => {
+    if (!isResizing.current) return;
+    const newWidth = (e.clientX / window.innerWidth) * 100;
+    if (newWidth > 20 && newWidth < 80) setLeftWidth(newWidth);
+  };
+
+  const handleMouseUp = () => {
+    isResizing.current = false;
+  };
+
+  useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
-
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
@@ -35,35 +44,52 @@ const App = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="h-screen w-full flex relative overflow-hidden">
-        {/* Left div */}
+      <Navbar theme={theme} setTheme={setTheme} />
+      <div className="h-[calc(100vh-4rem)] w-full flex flex-col md:flex-row relative overflow-hidden">
+        
+        {/* Left Panel */}
         <div
-          className="h-full overflow-y-auto bg-white"
-          style={{ width: `${leftWidth}%` }}
+          className="overflow-y-auto bg-transparent"
+          style={{
+            width: "100%",
+            height: "50%",
+            ...(window.innerWidth >= 768 && {
+              width: `${leftWidth}%`,
+              height: "100%",
+            }),
+          }}
         >
-          <Bar />
+          <Bar theme={theme} />
           <Info />
           <Subtask />
           <Markup />
           <Attachments />
         </div>
 
-        {/* Resizer */}
+        {/* Resizer (only desktop) */}
         <div
-          className="w-2  cursor-col-resize"
+          className={`hidden md:block w-1 cursor-col-resize ${
+            theme === "light" ? "bg-gray-500" : "bg-gray-700"
+          }`}
           onMouseDown={() => (isResizing.current = true)}
         />
 
-        {/* Right Div */}
+        {/* Right Panel */}
         <div
-          className="h-full  overflow-y-auto bg-gray-100"
-          style={{ width: `${100 - leftWidth}%` }}
+          className={`overflow-y-auto ${
+            theme === "light" ? "bg-gray-300" : "bg-transparent"
+          }`}
+          style={{
+            width: "100%",
+            height: "100%",
+            ...(window.innerWidth >= 768 && {
+              width: `${100 - leftWidth}%`,
+              height: "100%",
+            }),
+          }}
         >
-            <Stopwatch />
-          
+          <Stopwatch />
         </div>
-      
       </div>
     </>
   );

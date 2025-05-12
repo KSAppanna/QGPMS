@@ -80,11 +80,11 @@ const DropdownBar = () => {
           <form className="grid grid-cols-2 gap-4 mt-4">
             <div className="text-gray-800">
               Due Date:
-              <input type="text" className="p-2 rounded-md w-full h-[30px] bg-white text-indigo-800 border border-gray-300" value="4/3/25" disabled />
+              <input type="text" className="p-2 rounded-md w-full h-[30px] bg-white text-black border border-gray-300" value="4/3/25" disabled />
             </div>
             <div className="text-gray-800">
               Manager Remark:
-              <input type="text" className="p-2 rounded-md w-full h-[30px] bg-white text-indigo-800 border border-gray-300" value="N/A" disabled />
+              <input type="text" className="p-2 rounded-md w-full h-[30px] bg-white text-black border border-gray-300" value="N/A" disabled />
             </div>
           </form>
         </div>
@@ -94,7 +94,7 @@ const DropdownBar = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/40">
           <div className="p-6 rounded-xl w-[400px] bg-white shadow-md border border-gray-200">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-indigo-800">Information</h2>
+              <h2 className="text-xl font-semibold text-black">Information</h2>
               <button className="text-gray-500 hover:text-black text-2xl font-bold" onClick={() => setShowForm(false)}>
                 &times;
               </button>

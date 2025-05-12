@@ -31,7 +31,7 @@ const DropdownBar = () => {
           isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="mt-2 p-3 bg-white border border-gray-200 rounded-md shadow-sm">
+        <div className="mt-2 p-3 bg-white border border-gray-200 rounded-md shadow-sm text-center">
           {/* Placeholder for attachment content */}
           <p className="text-gray-600 text-sm">No attachments available.</p>
         </div>

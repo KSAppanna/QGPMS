@@ -59,7 +59,7 @@ const ResizableTable = () => {
                 key={col.key}
                 ref={(el) => (colRefs.current[col.key] = el)}
                 style={{ width: colWidths[col.key] || "auto" }}
-                className="relative group  p-2 font-semibold"
+                className="relative group  p-2 font-semibold "
               >
                 {col.label}
                 <div
@@ -72,8 +72,8 @@ const ResizableTable = () => {
         </thead>
         <tbody>
           {data.map((row, idx) => (
-            <tr className="bg-white" key={idx}>
-              <td className="text-center  p-2">{idx + 1}</td>
+            <tr className="bg-white text-black" key={idx}>
+              <td className="text-center  p-2 text-black">{idx + 1}</td>
               {columns.map((col) => (
                 <td key={col.key} className=" p-2">
                   {col.key === "subtaskID" ? (
