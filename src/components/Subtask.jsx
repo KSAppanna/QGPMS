@@ -36,7 +36,7 @@ const DropdownBar = ({ theme }) => {
           isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className={`mt-2 p-3 border border-gray-200 rounded-md shadow-sm ${theme === "light" ? "bg-gray-800" : "bg-black"}`}>
+        <div className={`mt-2 p-3 border border-gray-200 rounded-md shadow-sm ${theme === "light" ? "bg-white" : "bg-black"}`}>
           {/* Label updated with theme-based styling */}
           <label className={`block text-sm font-medium ${theme === "dark" ? "text-white" : "text-black"}`}>
             Subtask Information

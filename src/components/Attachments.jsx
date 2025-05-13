@@ -31,7 +31,7 @@ const DropdownBar = ({ theme }) => {
           isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className={`mt-2 p-3 border border-gray-200 rounded-md shadow-sm text-center ${theme === "light" ? "bg-gray-800" : "bg-black"}`}>
+        <div className={`mt-2 p-3 border border-gray-200 rounded-md shadow-sm text-center ${theme === "light" ? "bg-white" : "bg-black"}`}>
           {/* Placeholder for attachment content */}
           <p className={`text-sm ${theme === "light" ? "text-gray-600" : "text-white"}`}>No attachments available.</p>
         </div>
