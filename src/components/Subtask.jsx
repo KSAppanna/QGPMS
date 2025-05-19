@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import ResizableTable from "./ResizableTable";
+import ResizableTable from "./table/ResizableTable";
 
 const DropdownBar = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import MarkupTable from './MarkupTable';
+import MarkupTable from './table/MarkupTable';
 
 const DropdownBar = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);

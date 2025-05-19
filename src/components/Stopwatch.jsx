@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import TimesheetTable from "./TimesheetTable";
+import TimesheetTable from "./table/TimesheetTable";
 
 //Stopwatch and Timesheet Dropdown 
 
