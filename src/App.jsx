@@ -7,10 +7,11 @@ import Subtask from "./components/Subtask";
 import Markup from "./components/Markup";
 import Attachments from "./components/Attachments";
 import Stopwatch from "./components/Stopwatch";
+import Menubar from "./components/Menubar";
 
 const App = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const [leftWidth, setLeftWidth] = useState(50); // in %
+  const [leftWidth, setLeftWidth] = useState(window.innerWidth >= 768 ? 70 : 100); // 70% for desktop, 100% for mobile
   const isResizing = useRef(false);
 
   useEffect(() => {
@@ -45,8 +46,8 @@ const App = () => {
   return (
     <>
       <Navbar theme={theme} setTheme={setTheme} />
-      <div className="h-[calc(100vh-4rem)] w-full flex flex-col md:flex-row relative overflow-hidden">
-        
+      <div className="flex flex-col md:flex-row relative overflow-hidden h-screen w-full">
+        <Menubar />
         {/* Left Panel */}
         <div
           className="overflow-y-auto bg-transparent"

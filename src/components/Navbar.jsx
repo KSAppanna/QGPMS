@@ -1,7 +1,6 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import React, { useState } from 'react'
-import { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const navigation = [
   { name: 'QGPMS', href: '#', current: false },
@@ -24,6 +23,24 @@ function classNames(...classes) {
 }
 
 export default function Navbar({theme,setTheme}) {
+  const [currentTime, setCurrentTime] = useState("");
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      setCurrentTime(`${hours.toString().padStart(2, '0')}:${minutes}:${seconds}${ampm}`);
+    };
+    updateTime();
+    const timer = setInterval(updateTime, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   const handleToggle = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     localStorage.setItem("theme", newTheme);
@@ -79,8 +96,8 @@ export default function Navbar({theme,setTheme}) {
   <div className="bg-white rounded-full text-black">Vinod Kum..</div>
 
 
-
-  <div className="text-white">04:11:51PM</div>
+{/* Time */}
+  <div className="text-white">{currentTime}</div>
 
 <label className="swap swap-rotate">
   {/* this hidden checkbox controls the state */}
