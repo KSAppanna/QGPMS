@@ -60,19 +60,19 @@ const TimesheetDropdown = () => {
 
   const progress = (elapsed % 1000) / 1000 * 100;
   const circleStyle = {
-    background: `conic-gradient(#ec4899 ${progress * 3.6}deg, #f3f4f6 0deg)`,
+    background: `conic-gradient(#38bdf8 ${progress * 3.6}deg, #e0f2fe 0deg)`, // blue-400 to blue-100
   };
 
   return (
     <div className="w-full mx-auto mt-6 relative flex flex-col items-center space-y-6">
       {/* Stopwatch and button inline */}
-      <div className="flex items-center bg-white rounded-full px-6 py-4 shadow space-x-8">
+      <div className="flex items-center bg-white rounded-full px-6 py-4 shadow space-x-2">
         {/* Stopwatch Circle */}
         <div
           className="relative w-32 h-32 rounded-full flex items-center justify-center"
           style={circleStyle}
         >
-          <div className="absolute w-28 h-28 bg-white rounded-full flex items-center justify-center text-gray-800 text-xl font-mono tracking-tight" disbaled>
+          <div className="absolute w-28 h-28 bg-white rounded-full flex items-center justify-center text-gray-800 text-sm font-mono tracking-tight" disbaled>
             {formatTime(elapsed)}
           </div>
         </div>
@@ -101,7 +101,7 @@ const TimesheetDropdown = () => {
 
       {/* Toggle Bar */}
       <div
-        className="bg-sky-400 hover:bg-sky-500 text-white px-4 py-2 rounded-md flex justify-between items-center cursor-pointer shadow-md mt-2 w-full max-w-xl"
+        className="bg-gradient-to-r from-sky-400/80 via-cyan-400/70 to-blue-500/80 hover:from-sky-500/90 hover:via-cyan-500/80 hover:to-blue-600/90 text-white px-4 py-2 rounded-md flex justify-between items-center cursor-pointer shadow-lg backdrop-blur-md border border-white/30 border-b-2 border-b-cyan-200/60 mt-2 w-full max-w-xl"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex items-center space-x-2">

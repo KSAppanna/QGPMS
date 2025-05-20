@@ -6,9 +6,9 @@ const DropdownBar = ({ theme }) => {
   const [showForm, setShowForm] = useState(false);
 
   return (
-    <div className="w-full mx-auto mt-4 relative">
+    <div className="w-[90%] mx-auto mt-4 relative">
       <div
-        className="bg-sky-400 hover:bg-sky-500 text-white px-3 h-[36px] rounded-lg flex justify-between items-center cursor-pointer transition-colors"
+        className="bg-gradient-to-r from-blue-500 via-sky-300 to-blue-200 hover:from-blue-600 hover:via-sky-400 hover:to-blue-300 text-white px-3 h-[36px] rounded-lg flex justify-between items-center cursor-pointer transition-colors shadow-lg backdrop-blur-md bg-opacity-90"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex items-center">

@@ -11,8 +11,19 @@ import Menubar from "./components/Menubar";
 
 const App = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const [leftWidth, setLeftWidth] = useState(window.innerWidth >= 768 ? 70 : 100); // 70% for desktop, 100% for mobile
+  const [leftWidth, setLeftWidth] = useState(window.innerWidth >= 768 ? 70 : 100); // % width
   const isResizing = useRef(false);
+
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -26,12 +37,23 @@ const App = () => {
 
   const handleMouseMove = (e) => {
     if (!isResizing.current) return;
+
     const newWidth = (e.clientX / window.innerWidth) * 100;
-    if (newWidth > 20 && newWidth < 80) setLeftWidth(newWidth);
+    if (newWidth > 20 && newWidth < 80) {
+      setLeftWidth(newWidth);
+    }
+  };
+
+  const handleMouseDown = () => {
+    isResizing.current = true;
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
   };
 
   const handleMouseUp = () => {
     isResizing.current = false;
+    document.body.style.cursor = "default";
+    document.body.style.userSelect = "auto";
   };
 
   useEffect(() => {
@@ -45,52 +67,83 @@ const App = () => {
 
   return (
     <>
-      <Navbar theme={theme} setTheme={setTheme} />
-      <div className="flex flex-col md:flex-row relative overflow-hidden h-screen w-full">
-        <Menubar />
-        {/* Left Panel */}
-        <div
-          className="overflow-y-auto bg-transparent"
-          style={{
-            width: "100%",
-            height: "100%",
-            ...(window.innerWidth >= 768 && {
-              width: `${leftWidth}%`,
-              height: "100%",
-            }),
-          }}
-        >
-          <Bar theme={theme} />
-          <Info theme={theme}/>
-          <Subtask theme={theme}/>
-          <Markup theme={theme}/>
-          <Attachments theme={theme}/>
-        </div>
+      {/* Navbar fixed at the top */}
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <Navbar theme={theme} setTheme={setTheme} />
+      </div>
 
-        {/* Resizer (only desktop) */}
-        <div
-          className={`hidden md:block w-1 cursor-col-resize ${
-            theme === "light" ? "bg-gray-500" : "bg-gray-700"
-          }`}
-          onMouseDown={() => (isResizing.current = true)}
-        />
+      {/* Main content area */}
+      <div className="pt-10 overflow-hidden relative h-screen w-full">
+        {/* Menubar (desktop only) */}
+        {isDesktop && (
+          <div className="h-full absolute top-10 left-0 z-50">
+            <Menubar />
+          </div>
+        )}
 
-        {/* Right Panel */}
-        <div
-          className={`overflow-y-auto ${
-            theme === "light" ? "bg-gray-300" : "bg-transparent"
-          }`}
-          style={{
-            width: "100%",
-            height: "100%",
-            ...(window.innerWidth >= 768 && {
-              width: `${100 - leftWidth}%`,
-              height: "100%",
-            }),
-          }}
-        >
-          <Stopwatch />
-        </div>
+        {/* Panels and Resizer */}
+        {isDesktop ? (
+          <>
+            {/* Left panel */}
+            <div
+              className="overflow-y-auto bg-transparent min-w-[200px] ml-5 max-w-[80vw] h-full relative z-0"
+              style={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                width: `calc(${leftWidth}% - 0.5rem)`,
+                height: "100%",
+              }}
+            >
+              <Bar theme={theme} />
+              <Info theme={theme} />
+              <Subtask theme={theme} />
+              <Markup theme={theme} />
+              <Attachments theme={theme} />
+            </div>
+            {/* Resizer */}
+            <div
+              className={`absolute top-0 z-40 h-full w-1 cursor-col-resize ${
+                theme === "light" ? "bg-gray-100" : "bg-gray-100"
+              }`}
+              style={{ left: `calc(${leftWidth}% - 1px)` }}
+              onMouseDown={handleMouseDown}
+            />
+            {/* Right panel */}
+            <div
+              className={`overflow-y-auto min-w-[200px] max-w-[80vw] h-full mt-10 ${
+                theme === "light" ? "bg-grey-100" : "bg-transparent"
+              }`}
+              style={{
+                position: "absolute",
+                left: `calc(${leftWidth}% + 1px)`,
+                top: 0,
+                width: `calc(${100 - leftWidth}% - 1px)`,
+                height: "100%",
+              }}
+            >
+              <Stopwatch />
+            </div>
+          </>
+        ) : (
+          // Mobile layout: stacked
+          <>
+            <div className="overflow-y-auto bg-transparent w-full h-1/2">
+              <Bar theme={theme} />
+              <Info theme={theme} />
+              <Subtask theme={theme} />
+              <Markup theme={theme} />
+              <Attachments theme={theme} />
+            </div>
+            <div
+              className={`overflow-y-auto w-full h-1/2 ${
+                theme === "light" ? "bg-gray-300" : "bg-transparent"
+              }`}
+            >
+              <Stopwatch />
+            </div>
+          </>
+        )}
       </div>
     </>
   );

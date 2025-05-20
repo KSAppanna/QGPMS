@@ -5,10 +5,10 @@ const DropdownBar = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="w-full mx-auto mt-4">
+    <div className="w-[90%] mx-auto mt-4">
       {/* Toggle Button */}
       <div 
-        className="bg-sky-400 hover:bg-sky-500 text-white px-3 h-[36px] rounded-md flex items-center cursor-pointer transition-colors duration-200"
+        className="bg-gradient-to-r from-blue-500 via-sky-300 to-blue-200 hover:from-blue-600 hover:via-sky-400 hover:to-blue-300 text-white px-3 h-[36px] rounded-md flex items-center cursor-pointer transition-colors duration-200 shadow-lg backdrop-blur-md "
         onClick={() => setIsOpen(!isOpen)}
       >
         {/* Dropdown icon */}
@@ -31,7 +31,7 @@ const DropdownBar = ({ theme }) => {
           isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className={`mt-2 p-3 border border-gray-200 rounded-md shadow-sm text-center ${theme === "light" ? "bg-white" : "bg-black"}`}>
+        <div className={`mt-2 p-3 rounded-md shadow-lg backdrop-blur-md text-center ${theme === "light" ? "bg-gradient-to-r from-white/80 via-cyan-100/60 to-blue-100/80" : "bg-gradient-to-r from-slate-900/80 via-cyan-900/60 to-blue-900/80"}`}>
           {/* Placeholder for attachment content */}
           <p className={`text-sm ${theme === "light" ? "text-gray-600" : "text-white"}`}>No attachments available.</p>
         </div>

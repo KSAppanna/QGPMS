@@ -56,10 +56,12 @@ export default function Navbar({theme,setTheme}) {
 
   
   return (
-    <Disclosure as="nav" className="bg-blue-800 ">
+    <>
+    <Disclosure as="nav" className="bg-gradient-to-r from-blue-700 via-blue-500 to-cyan-400 shadow-lg backdrop-blur-md bg-opacity-80 border-b border-blue-300 dark:border-blue-900">
       <div className="mx-auto max-w-7xl px-2 sm:px-6">
         <div className="relative flex h-10 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center">
+          
             {/* Mobile menu button */}
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md text-white hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset">
               <span className="absolute -inset-0.5" />
@@ -78,8 +80,8 @@ export default function Navbar({theme,setTheme}) {
         href={item.href}
         aria-current={item.current ? 'page' : undefined}
         className={classNames(
-          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-          `${index === 0 ? 'ml-4' : ''} rounded-md px-3 py-2 text-sm font-medium`, // Add margin-left to the first item
+          item.current ? 'bg-gray-900 text-white' : 'text-gray-300  ',
+          `${index === 0 ? 'ml-4 text-[20px] font-bold tracking-wide' : ''} rounded-md px-3 py-2 text-sm font-medium`,
         )}
       >
         {item.name}
@@ -91,13 +93,11 @@ export default function Navbar({theme,setTheme}) {
 
           
           <div className="relative inset-y-0 right-0 flex items-center justify-between pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 space-x-4">
-  
- 
-  <div className="bg-white rounded-full text-black">Vinod Kum..</div>
+  <div className="bg-white/80 backdrop-blur-md rounded-full text-black px-4 py-1 shadow-md">Vinod Kum..</div>
 
 
 {/* Time */}
-  <div className="text-white">{currentTime}</div>
+  <div className="text-white font-mono drop-shadow-lg text-lg">{currentTime}</div>
 
 <label className="swap swap-rotate">
   {/* this hidden checkbox controls the state */}
@@ -147,7 +147,7 @@ export default function Navbar({theme,setTheme}) {
 
   <Menu as="div" className="relative ml-3">
     <div>
-      <MenuButton className="relative flex rounded-full text-white text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
+      <MenuButton className="relative flex rounded-full text-white text-sm focus:ring-2 focus:ring-cyan-300 focus:ring-offset-2 focus:ring-offset-blue-800 focus:outline-hidden bg-gradient-to-r from-cyan-500 to-blue-700 shadow-md">
         <span className="absolute -inset-1.5" />
         <span className="sr-only">Open user menu</span>
         <svg
@@ -188,5 +188,7 @@ export default function Navbar({theme,setTheme}) {
         </div>
       </DisclosurePanel>
     </Disclosure>
+    {/* Remove the Menubar here to avoid layout and functionality issues. Menubar should be handled in App.jsx layout only. */}
+    </>
   )
 }

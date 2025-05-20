@@ -6,10 +6,10 @@ const DropdownBar = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="w-full mx-auto mt-4">
+    <div className="w-[90%] mx-auto mt-4">
       {/* Toggle Button */}
       <div 
-        className="bg-sky-400 hover:bg-sky-500 text-white flex items-center px-3 h-[36px] rounded-md cursor-pointer transition-colors duration-200" 
+        className="bg-gradient-to-r from-blue-500 via-sky-300 to-blue-200 hover:from-blue-600 hover:via-sky-400 hover:to-blue-300 text-white flex items-center px-3 h-[36px] rounded-md cursor-pointer transition-colors duration-200 shadow-lg backdrop-blur-md" 
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? (
@@ -32,7 +32,7 @@ const DropdownBar = ({ theme }) => {
           isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className={`mt-2 p-3 border border-gray-200 rounded-md shadow-sm bg-black}`}>
+        <div className={`mt-2 p-3 rounded-md shadow-lg backdrop-blur-md ${theme === "light" ? "bg-gradient-to-r from-white/80 via-cyan-100/60 to-blue-100/80" : "bg-gradient-to-r from-slate-900/80 via-cyan-900/60 to-blue-900/80"}`}>
           <MarkupTable theme={theme}/> 
         </div>
       </div>
