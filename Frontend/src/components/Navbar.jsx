@@ -1,6 +1,8 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import { IoPersonCircleOutline } from "react-icons/io5";
+import { IoPerson } from "react-icons/io5";
 
 const navigation = [
   { name: 'QGPMS', href: '#', current: false },
@@ -53,21 +55,34 @@ export default function Navbar({theme,setTheme}) {
     document.querySelector("html").setAttribute("data-theme",localTheme)
   }, [theme])
 
+ const [open, setOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
   
   return (
     <>
-    <Disclosure as="nav" className="bg-gradient-to-r from-blue-700 via-blue-500 to-cyan-400 shadow-lg backdrop-blur-md bg-opacity-80 border-b border-blue-300 dark:border-blue-900">
-      <div className="mx-auto max-w-7xl px-2 sm:px-6">
-        <div className="relative flex h-10 items-center justify-between">
+    <Disclosure as="nav" className="bg-gradient-to-r from-blue-700 via-blue-500 to-cyan-400 shadow-lg backdrop-blur-md bg-opacity-80">
+      <div className=" px-2 sm:px-6">
+        <div className="relative flex h-10 w-full items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center">
           
             {/* Mobile menu button */}
-            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md text-white hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset">
+            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md text-white hover:bg-gray-700 hover:text-white ">
               <span className="absolute -inset-0.5" />
               <span className="sr-only">Open main menu</span>
               <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
               <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
+              
             </DisclosureButton>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -93,7 +108,9 @@ export default function Navbar({theme,setTheme}) {
 
           
           <div className="relative inset-y-0 right-0 flex items-center justify-between pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 space-x-4">
-  <div className="bg-white/80 backdrop-blur-md rounded-full text-black px-4 py-1 shadow-md">Vinod Kum..</div>
+  <div className="hidden md:block bg-white/80 backdrop-blur-md rounded-full text-black px-4 py-1 shadow-md">
+  Vinod Kum..
+</div>
 
 
 {/* Time */}
@@ -125,7 +142,7 @@ export default function Navbar({theme,setTheme}) {
 
   <button
     type="button"
-    className="relative rounded-full p-1 text-white hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
+    className="relative rounded-full p-1 text-white hover:text-white "
   >
     <span className="absolute -inset-1.5" />
     <span className="sr-only">View notifications</span>
@@ -145,16 +162,18 @@ export default function Navbar({theme,setTheme}) {
     </svg>
   </button>
 
-  <Menu as="div" className="relative ml-3">
-    <div>
-      <MenuButton className="relative flex rounded-full text-white text-sm focus:ring-2 focus:ring-cyan-300 focus:ring-offset-2 focus:ring-offset-blue-800 focus:outline-hidden bg-gradient-to-r from-cyan-500 to-blue-700 shadow-md">
+  <div className="relative ml-3" ref={dropdownRef}>
+      <button
+        onClick={() => setOpen(!open)}
+        className="relative flex items-center justify-center w-10 h-10 rounded-full text-green-300 text-sm focus:ring-cyan-300 bg-gradient-to-r from-cyan-500 to-blue-700"
+      >
         <span className="absolute -inset-1.5" />
         <span className="sr-only">Open user menu</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
-          className="size-6"
+          className="w-6 h-6"
         >
           <path
             fillRule="evenodd"
@@ -162,15 +181,30 @@ export default function Navbar({theme,setTheme}) {
             clipRule="evenodd"
           />
         </svg>
-      </MenuButton>
+      </button>
+
+      {open && (
+        <div className="absolute right-0 z-10 mt-2 w-70 h-65 rounded-xl bg-white text-black shadow-sm transition ease-out duration-200 animate-fade-in flex flex-row justify-center">
+          <div className="p-4 text-base font-medium text-center space-y-4 flex flex-col">
+            {/* <IoPersonCircleOutline className='h-20 w-20'/> */} 
+            <div className='h-22 w-22 rounded-full border-2 border-black flex justify-center items-center mx-auto '>
+              <IoPerson className='h-18 w-18 text-black' />
+            </div>
+
+            <span>Hi,User</span>
+
+            <button className='h-10 w-30 border-2 rounded-3xl'>Sign out</button>
+
+          </div>
+        </div>
+      )}
     </div>
-  </Menu>
 </div>
         </div>
       </div>
 
       <DisclosurePanel className="sm:hidden">
-        <div className="space-y-2 px-0 pt-2 pb-3">
+        <div className="space-y-2 px-0 pt-2 pb-3 z-150">
           {navigation.map((item) => (
             <DisclosureButton
               key={item.name}
@@ -178,7 +212,7 @@ export default function Navbar({theme,setTheme}) {
               href={item.href}
               aria-current={item.current ? 'page' : undefined}
               className={classNames(
-                item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                item.current ? 'bg-grey-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                 'block rounded-md px-3 py-2 text-base font-medium'
               )}
             >
@@ -188,7 +222,7 @@ export default function Navbar({theme,setTheme}) {
         </div>
       </DisclosurePanel>
     </Disclosure>
-    {/* Remove the Menubar here to avoid layout and functionality issues. Menubar should be handled in App.jsx layout only. */}
+  
     </>
   )
 }

@@ -71,8 +71,8 @@ const DropdownBar = ({ theme }) => {
         }`}
       >
         <div
-          className={`mt-2 p-4 rounded-lg border border-gray-200 ${
-            theme === "dark" ? "bg-gray-800" : "bg-white"
+          className={`mt-0.5 p-4 rounded-lg border border-gray-200 ${
+            theme === "dark" ? "bg-transparent" : "bg-white"
           }`}
         >
           <form className="grid grid-cols-4 gap-4">

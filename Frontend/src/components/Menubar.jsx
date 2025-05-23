@@ -24,7 +24,7 @@ import { IoIosPeople } from "react-icons/io";
 const Menubar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showProjects, setShowProjects] = useState(false);
-  const [showTasks, setShowTasks] = useState(false); // Separate state for Tasks
+  const [showTasks, setShowTasks] = useState(false); 
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);

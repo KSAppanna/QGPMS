@@ -140,7 +140,7 @@ const App = () => {
                 theme === "light" ? "bg-gray-300" : "bg-transparent"
               }`}
             >
-              <Stopwatch />
+              <Stopwatch theme={theme}/>
             </div>
           </>
         )}

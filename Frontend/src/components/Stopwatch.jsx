@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import TimesheetTable from "./table/TimesheetTable";
+import TimesheetTable from "./table/TimesheetTable"; // Optional: if you're using this somewhere else
+import Table from "./table/Table";
 
-//Stopwatch and Timesheet Dropdown 
-
-
-
-const TimesheetDropdown = () => {
+const TimesheetDropdown = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [startTime, setStartTime] = useState(null);
@@ -16,7 +13,7 @@ const TimesheetDropdown = () => {
   // Start or stop timer
   useEffect(() => {
     if (isRunning) {
-      const start = Date.now() - elapsed;
+      const start = Date.now();
       intervalRef.current = setInterval(() => {
         setElapsed(Date.now() - start);
       }, 10);
@@ -26,17 +23,15 @@ const TimesheetDropdown = () => {
     return () => clearInterval(intervalRef.current);
   }, [isRunning]);
 
+  // Time format: hours.minutes.seconds
   const formatTime = (ms) => {
     const hours = Math.floor(ms / 3600000);
     const minutes = Math.floor((ms % 3600000) / 60000);
     const seconds = Math.floor((ms % 60000) / 1000);
-    const milliseconds = ms % 1000;
 
     return `${hours.toString().padStart(2, '0')}.${minutes
       .toString()
-      .padStart(2, '0')}.${seconds.toString().padStart(2, '0')}.${milliseconds
-      .toString()
-      .padStart(3, '0')}`;
+      .padStart(2, '0')}.${seconds.toString().padStart(2, '0')}`;
   };
 
   const handleToggle = () => {
@@ -63,8 +58,11 @@ const TimesheetDropdown = () => {
     background: `conic-gradient(#38bdf8 ${progress * 3.6}deg, #e0f2fe 0deg)`, // blue-400 to blue-100
   };
 
+  // Sample data
+  const data=[{}]
+
   return (
-    <div className="w-full mx-auto mt-6 relative flex flex-col items-center space-y-6">
+    <div className="w-full mx-auto mt-7 relative flex flex-col items-center">
       {/* Stopwatch and button inline */}
       <div className="flex items-center bg-white rounded-full px-6 py-4 shadow space-x-2">
         {/* Stopwatch Circle */}
@@ -72,7 +70,7 @@ const TimesheetDropdown = () => {
           className="relative w-32 h-32 rounded-full flex items-center justify-center"
           style={circleStyle}
         >
-          <div className="absolute w-28 h-28 bg-white rounded-full flex items-center justify-center text-gray-800 text-sm font-mono tracking-tight" disbaled>
+          <div className="absolute w-28 h-28 bg-white rounded-full flex items-center justify-center text-gray-800 text-sm font-mono tracking-tight">
             {formatTime(elapsed)}
           </div>
         </div>
@@ -101,7 +99,7 @@ const TimesheetDropdown = () => {
 
       {/* Toggle Bar */}
       <div
-        className="bg-gradient-to-r from-sky-400/80 via-cyan-400/70 to-blue-500/80 hover:from-sky-500/90 hover:via-cyan-500/80 hover:to-blue-600/90 text-white px-4 py-2 rounded-md flex justify-between items-center cursor-pointer shadow-lg backdrop-blur-md border border-white/30 border-b-2 border-b-cyan-200/60 mt-2 w-full max-w-xl"
+        className="bg-gradient-to-r from-sky-400/80 via-cyan-400/70 to-blue-500/80 hover:from-sky-500/90 hover:via-cyan-500/80 hover:to-blue-600/90 text-white px-4 py-2 rounded-md flex justify-between items-center cursor-pointer shadow backdrop-blur-md  w-full max-w-xl mt-8"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex items-center space-x-2">
@@ -126,8 +124,15 @@ const TimesheetDropdown = () => {
         </div>
       </div>
 
-      {/* Timesheet Table */}
-      <TimesheetTable isOpen={isOpen} tasks={tasks}/>
+      <div
+        className={`transition-all duration-500 ease-in-out overflow-hidden ${
+          isOpen ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className={`mt-0.5 rounded-md shadow-lg backdrop-blur-md `}>
+          <Table data={data}/>
+        </div>
+      </div>
     </div>
   );
 };

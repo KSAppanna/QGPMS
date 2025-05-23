@@ -7,7 +7,7 @@ const columns = [
   { key: "duration", label: "Duration" },
 ];
 
-const TimesheetTable = ({ isOpen, tasks }) => {
+const TimesheetTable = ({ isOpen, tasks, theme }) => {
   const colRefs = useRef({});
   const [colWidths, setColWidths] = useState({});
 
@@ -31,13 +31,13 @@ const TimesheetTable = ({ isOpen, tasks }) => {
 
   return (
     <div
-      className={`transition-all duration-500 ease-in-out overflow-hidden w-full max-w-full ${
+      className={`transition-all duration-500 ease-in-out overflow-hidden w-full max-w-full shadow ${
         isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
       }`}
     >
-      <div className="mt-1 p-4 bg-white rounded-lg shadow-md">
-        <div className="overflow-auto rounded-xl">
-          <table className="min-w-full text-sm text-left rounded-xl">
+      <div className={`mt-0.5 p-3 rounded-md shadow-xl `}>
+        <div className="overflow-auto rounded-xl bg-white">
+          <table className="min-w-full text-sm text-left rounded-xl ">
             <thead className="bg-blue-200 text-gray-700">
               <tr>
                 <th className="p-2 font-semibold text-center">S.No</th>

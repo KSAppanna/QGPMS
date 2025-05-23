@@ -67,7 +67,7 @@ const ResizableTable = ({ theme }) => {
         </tbody>
       </table>
       {/* Placeholder message when there is no data */}
-      <div className="text-center mt-2 text-gray-500 bg-white">no markup</div>
+      <div className="text-center text-gray-500 bg-white">no markup</div>
     </div>
   );  
 };

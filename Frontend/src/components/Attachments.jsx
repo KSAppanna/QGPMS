@@ -31,9 +31,9 @@ const DropdownBar = ({ theme }) => {
           isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className={`mt-2 p-3 rounded-md shadow-lg backdrop-blur-md text-center ${theme === "light" ? "bg-gradient-to-r from-white/80 via-cyan-100/60 to-blue-100/80" : "bg-gradient-to-r from-slate-900/80 via-cyan-900/60 to-blue-900/80"}`}>
+        <div className={`mt-0.5 p-3 rounded-md shadow-sm backdrop-blur-md text-center `}>
           {/* Placeholder for attachment content */}
-          <p className={`text-sm ${theme === "light" ? "text-gray-600" : "text-white"}`}>No attachments available.</p>
+          <p className={`text-sm `}>No attachments available.</p>
         </div>
       </div>
     </div>

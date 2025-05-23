@@ -1,9 +1,30 @@
 import { useState } from "react";
 import React from "react";
 import ResizableTable from "./table/ResizableTable";
+import Table from "./table/Table";
 
 const DropdownBar = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  // Sample data
+ const generateRandomData = (count) => {
+  const statuses = ["Completed", "In Progress", "Pending", "Delayed"];
+  const deliveryStatuses = ["On Time", "Late", "Early", "Rescheduled"];
+
+  return Array.from({ length: count }, (_, index) => ({
+    subtaskID: `SUB-${String(index + 100).padStart(7, "0")}`,
+    subtaskName: `Task ${index + 1}`,
+    taskName: `IQC-${String(Math.floor(Math.random() * 200) + 100).padStart(7, "0")}`,
+    owner: `Owner ${index + 1}`,
+    dueDate: `6/${String(Math.floor(Math.random() * 28) + 1).padStart(2, "0")}/24`,
+    startDate: `6/${String(Math.floor(Math.random() * 28) + 1).padStart(2, "0")}/24`,
+    endDate: `6/${String(Math.floor(Math.random() * 28) + 1).padStart(2, "0")}/24`,
+    status: statuses[Math.floor(Math.random() * statuses.length)],
+    deliveryStatus: deliveryStatuses[Math.floor(Math.random() * deliveryStatuses.length)],
+  }));
+};
+
+const data = generateRandomData(20);
 
   return (
     <div className="w-[90%] mx-auto mt-4">
@@ -36,12 +57,12 @@ const DropdownBar = ({ theme }) => {
           isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className={`mt-2 p-3 rounded-md shadow-lg backdrop-blur-md ${theme === "light" ? "bg-gradient-to-r from-white/80 via-cyan-100/60 to-blue-100/80" : "bg-gradient-to-r from-slate-900/80 via-cyan-900/60 to-blue-900/80"}`}>
+        <div className={`mt-0.5 p-3 rounded-md shadow-lg backdrop-blur-md bg-transparent`}>
           {/* Label updated with theme-based styling */}
           <label className={`block text-sm font-medium ${theme === "dark" ? "text-white" : "text-black"}`}>
             Subtask Information
           </label>
-          <ResizableTable />
+          <Table data={data}/>
         </div>
       </div>
     </div>

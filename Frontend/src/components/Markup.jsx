@@ -1,9 +1,24 @@
 import { useState } from "react";
 import React from "react";
 import MarkupTable from './table/MarkupTable';
+import Table from './table/Table';
 
 const DropdownBar = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+
+  // Sample data
+ const data = Array.from({ length: 5}, (_, index) => ({
+  markupName: `Task ${index + 1}`,
+  taskName: index % 2 === 0 ? "Initial Draft" : "Final Review",
+  markupOwner: ["Alice", "Bob", "Charlie", "David", "Eve"][index % 5],
+  markupDueDate: `2025-06-${String((index % 30) + 1).padStart(2, "0")}`,
+  markupStartDate: `2025-05-${String((index % 30) + 1).padStart(2, "0")}`,
+  markupEndDate: `2025-06-${String(((index + 10) % 30) + 1).padStart(2, "0")}`,
+  markupStatus: ["Pending", "In Progress", "Completed"][index % 3],
+  markupDeliveryStatus: index % 2 === 0 ? "Delivered" : "Pending",
+}));
+
 
   return (
     <div className="w-[90%] mx-auto mt-4">
@@ -29,11 +44,11 @@ const DropdownBar = ({ theme }) => {
       {/* Dropdown Content */}
       <div
         className={`transition-all duration-500 ease-in-out overflow-hidden ${
-          isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
+          isOpen ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className={`mt-2 p-3 rounded-md shadow-lg backdrop-blur-md ${theme === "light" ? "bg-gradient-to-r from-white/80 via-cyan-100/60 to-blue-100/80" : "bg-gradient-to-r from-slate-900/80 via-cyan-900/60 to-blue-900/80"}`}>
-          <MarkupTable theme={theme}/> 
+        <div className={`mt-0.5 rounded-md shadow-lg backdrop-blur-md `}>
+          <Table data={data}/>
         </div>
       </div>
     </div>
