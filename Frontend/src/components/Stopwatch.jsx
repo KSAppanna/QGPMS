@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import TimesheetTable from "./table/TimesheetTable"; // Optional: if you're using this somewhere else
 import Table from "./table/Table";
+import TableA from "./table/TableA";
 
 const TimesheetDropdown = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,7 +60,15 @@ const TimesheetDropdown = ({ theme }) => {
   };
 
   // Sample data
-  const data=[{}]
+  const data=[{
+
+  }]
+  
+
+  
+
+
+
 
   return (
     <div className="w-full mx-auto mt-7 relative flex flex-col items-center">
@@ -126,12 +135,13 @@ const TimesheetDropdown = ({ theme }) => {
 
       <div
         className={`transition-all duration-500 ease-in-out overflow-hidden ${
-          isOpen ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
+          isOpen ? " opacity-100 w-[100%]" : "max-h-0 opacity-0 w-[100%]"
         }`}
       >
-        <div className={`mt-0.5 rounded-md shadow-lg backdrop-blur-md `}>
-          <Table data={data}/>
-        </div>
+        <div className="mt-0.5 rounded-md shadow-lg backdrop-blur-md h-[400px] w-[100%]">
+  <TableA data={data} className="relative "/>
+</div>
+
       </div>
     </div>
   );

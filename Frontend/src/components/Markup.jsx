@@ -2,6 +2,8 @@ import { useState } from "react";
 import React from "react";
 import MarkupTable from './table/MarkupTable';
 import Table from './table/Table';
+import TableA from "./table/TableA";
+
 
 const DropdownBar = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +20,8 @@ const DropdownBar = ({ theme }) => {
   markupStatus: ["Pending", "In Progress", "Completed"][index % 3],
   markupDeliveryStatus: index % 2 === 0 ? "Delivered" : "Pending",
 }));
+
+
 
 
   return (
@@ -48,7 +52,8 @@ const DropdownBar = ({ theme }) => {
         }`}
       >
         <div className={`mt-0.5 rounded-md shadow-lg backdrop-blur-md `}>
-          <Table data={data}/>
+          {/* <Table data={data} theme={theme}/> */}
+          <TableA data={data} theme={theme}/>
         </div>
       </div>
     </div>

@@ -1,3 +1,5 @@
+import time_log_model from "../models/timeLog.model.js";
+
 export const timeLogController = async(req,res)=>{
    const {user,startTime,endTime,duration} = req.body;
    try {
@@ -22,3 +24,13 @@ export const timeLogController = async(req,res)=>{
     res.status(500).json({message: "Internal server error"})
    }
 }
+
+export const getTimeLogs = async (req, res) => {
+   try {
+      const logs = await time_log_model.find(); 
+      res.status(200).json(logs);
+   } catch (error) {
+      console.log("Error fetching time logs:", error.message);
+      res.status(500).json({ message: "Internal server error" });
+   }
+};

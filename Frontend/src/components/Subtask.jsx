@@ -2,6 +2,7 @@ import { useState } from "react";
 import React from "react";
 import ResizableTable from "./table/ResizableTable";
 import Table from "./table/Table";
+import TableA from "./table/TableA";
 
 const DropdownBar = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,15 +55,12 @@ const data = generateRandomData(20);
 
       <div
         className={`transition-all duration-700 ease-in-out overflow-hidden ${
-          isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
+          isOpen ? " opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className={`mt-0.5 p-3 rounded-md shadow-lg backdrop-blur-md bg-transparent`}>
-          {/* Label updated with theme-based styling */}
-          <label className={`block text-sm font-medium ${theme === "dark" ? "text-white" : "text-black"}`}>
-            Subtask Information
-          </label>
-          <Table data={data}/>
+        <div className={`mt-0.5 rounded-md shadow-lg backdrop-blur-md bg-transparent`}>
+          {/* <Table data={data} theme={theme}/> */}
+          <TableA data={data}/>
         </div>
       </div>
     </div>
