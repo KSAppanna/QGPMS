@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
-
+@plugin "tailwindcss-motion";
 @plugin "daisyui" {
   themes: ["light", "dark"];
 }
@@ -8,6 +8,5 @@
 html, body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
   height: 100%;
 }

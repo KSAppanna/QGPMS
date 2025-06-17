@@ -1,17 +1,17 @@
 import { useState } from "react";
 import React from "react";
 
-const DropdownBar = ({ theme }) => {
+const DropdownBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
   return (
-    <div className="w-[90%] mx-auto mt-4 relative">
+    <div className="w-[100%] sm:w-[90%] mx-auto sm:ml-6 mt-4 relative">
       <div
         className="bg-gradient-to-r from-blue-500 via-sky-300 to-blue-200 hover:from-blue-600 hover:via-sky-400 hover:to-blue-300 text-white px-3 h-[36px] rounded-lg flex justify-between items-center cursor-pointer transition-colors shadow-lg backdrop-blur-md bg-opacity-90"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="flex items-center">
+        <div className="flex items-center w-[100%] ">
           {isOpen ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -66,14 +66,12 @@ const DropdownBar = ({ theme }) => {
       </div>
 
       <div
-        className={`transition-all duration-500 ease-in-out overflow-hidden ${
+        className={`transition-all duration-500 ease-in-out ${
           isOpen ? "max-h-[320px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div
-          className={`mt-0.5 p-4 rounded-lg border border-gray-200 ${
-            theme === "dark" ? "bg-transparent" : "bg-white"
-          }`}
+          className={`mt-0.5 p-4 rounded-lg border border-gray-200 bg-white dark:bg-gray-800`}
         >
           <form className="grid grid-cols-4 gap-4">
             {[
@@ -90,7 +88,7 @@ const DropdownBar = ({ theme }) => {
               ["Start Date:", "5/24/24"],
               ["End Date:", ""],
             ].map(([label, value], idx) => (
-              <div key={idx} className={`${theme === "dark" ? "text-white" : "text-black"}`}>
+              <div key={idx} className={`text-black dark:text-white`}>
                 {label}
                 <input
                   type="text"
@@ -107,7 +105,7 @@ const DropdownBar = ({ theme }) => {
               ["Due Date:", "4/3/25"],
               ["Manager Remark:", "N/A"],
             ].map(([label, value], idx) => (
-              <div key={idx} className={`${theme === "dark" ? "text-white" : "text-black"}`}>
+              <div key={idx} className={`text-black dark:text-white`}>
                 {label}
                 <input
                   type="text"
@@ -130,14 +128,14 @@ const DropdownBar = ({ theme }) => {
                 &times;
               </button>
             </div>
-            <form className={`space-y-4 ${theme === "dark" ? "bg-black" : "bg-transparent"}`}>
+            <form className={`space-y-4 bg-white dark:bg-[#1f232e]`}>
               {[
                 ["Task ID", "text"],
                 ["Job ID", "text"],
                 ["Manager Remark", "textarea"],
               ].map(([label, type], idx) => (
                 <div key={idx}>
-                  <label className={`block text-sm font-medium ${theme === "dark" ? "text-white" : "text-black"}`}>
+                  <label className={`block text-sm font-medium text-white dark:text-black`}>
                     {label}
                   </label>
                   {type === "textarea" ? (

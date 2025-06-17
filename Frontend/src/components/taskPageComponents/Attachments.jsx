@@ -5,7 +5,7 @@ const DropdownBar = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="w-[90%] mx-auto mt-4">
+    <div className="w-[100%] sm:w-[90%] mx-auto mt-4 sm:ml-6">
       {/* Toggle Button */}
       <div 
         className="bg-gradient-to-r from-blue-500 via-sky-300 to-blue-200 hover:from-blue-600 hover:via-sky-400 hover:to-blue-300 text-white px-3 h-[36px] rounded-md flex items-center cursor-pointer transition-colors duration-200 shadow-lg backdrop-blur-md "

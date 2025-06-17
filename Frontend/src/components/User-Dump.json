@@ -1,0 +1,22 @@
+[
+	{
+		"Employee_ID" : "CMS-QWS/001",
+		"Full_Name" : "Nagarjuna",
+		"Email_ID" : "KolluNagarguna@quadgenwireless.com",
+		"Department" : "AT&T OSP",
+		"Designation" : "Senior GIS Engineer",
+		"Location" : "Vijayawada",
+		"Role" : "Manager",
+		"imageUrl": "/images/32.jpg"
+	},
+	{
+		"Employee_ID" : "CMS-QWS/002",
+		"Full_Name" : "Jayashree",
+		"Email_ID" : "jayashree@quadgenwireless.com",
+		"Department" : "AT&T OSP",
+		"Designation" : "Engineer",
+		"Location" : "Vijayawada",
+		"Role" : "Employee",
+		"imageUrl": "/images/44.jpg"
+	}
+]

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import React from "react";
-import ResizableTable from "./table/ResizableTable";
-import Table from "./table/Table";
-import TableA from "./table/TableA";
+import ResizableTable from "../table/ResizableTable";
+import Table from "../table/Table";
+import TableA from "../table/TableA";
 
 const DropdownBar = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +28,7 @@ const DropdownBar = ({ theme }) => {
 const data = generateRandomData(20);
 
   return (
-    <div className="w-[90%] mx-auto mt-4">
+    <div className="w-[100%] sm:w-[90%] mx-auto mt-4 sm:ml-6">
       <div
         className="relative bg-gradient-to-r from-blue-500 via-sky-300 to-blue-200 hover:from-blue-600 hover:via-sky-400 hover:to-blue-300 text-white flex items-center p-2 w-full h-[36px] rounded-md cursor-pointer transition-colors duration-200 backdrop-blur-md"
         onClick={() => setIsOpen(!isOpen)}

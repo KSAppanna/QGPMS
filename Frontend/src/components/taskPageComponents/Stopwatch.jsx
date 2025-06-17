@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import TimesheetTable from "./table/TimesheetTable"; // Optional: if you're using this somewhere else
-import Table from "./table/Table";
-import TableA from "./table/TableA";
+import TimesheetTable from "../table/TimesheetTable"; // Optional: if you're using this somewhere else
+import Table from "../table/Table";
+import TableA from "../table/TableA";
 
 const TimesheetDropdown = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);
