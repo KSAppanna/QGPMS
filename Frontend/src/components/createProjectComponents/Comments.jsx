@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ReactSpreadsheetImport, StepType } from "react-spreadsheet-import";
-
+import axios from "axios";
 const fields = [
   {
     label: "Program",
@@ -13,6 +13,11 @@ const fields = [
         rule: "required",
         errorMessage: "Program is required",
       },
+         {
+        rule: "regex",
+        value: "^[a-zA-Z0-9_-]+$",
+        errorMessage: "Program only takes alphanumeric characters, underscores, and hyphens",
+      }
     ],
   },
   {
@@ -25,6 +30,11 @@ const fields = [
       {
         rule: "required",
         errorMessage: "Job ID is required",
+      },
+       {
+        rule: "regex",
+        value: "^[a-zA-Z0-9_-]+$",
+        errorMessage: "Job ID only takes alphanumeric characters, underscores, and hyphens",
       }
     ],
   },
@@ -37,7 +47,13 @@ const fields = [
       {
         rule: "required",
         errorMessage: "Job Name is required",
+        
       },
+       {
+        rule: "regex",
+        value: "^[a-zA-Z0-9_-]+$",
+        errorMessage: "Job Name only takes alphanumeric characters, underscores, and hyphens",
+      }
     ],
   },
 
@@ -51,6 +67,11 @@ const fields = [
         rule: "required",
         errorMessage: "Scope of Work is required",
       },
+       {
+        rule: "regex",
+        value: "^[a-zA-Z0-9_-]+$",
+        errorMessage: "Scope of Work only takes alphanumeric characters, underscores, and hyphens",
+      }
     ],
   },
 
@@ -64,6 +85,11 @@ const fields = [
         rule: "required",
         errorMessage: "Work Type is required",
       },
+       {
+        rule: "regex",
+        value: "^[a-zA-Z0-9_-]+$",
+        errorMessage: "Work Type only takes alphanumeric characters, underscores, and hyphens",
+      }
     ],
   },
 
@@ -77,6 +103,11 @@ const fields = [
         rule: "required",
         errorMessage: "Division is required",
       },
+       {
+        rule: "regex",
+        value: "^[a-zA-Z0-9_-]+$",
+        errorMessage: "Program only takes alphanumeric characters, underscores, and hyphens",
+      }
     ],
   },
 
@@ -90,6 +121,11 @@ const fields = [
         rule: "required",
         errorMessage: "Region is required",
       },
+       {
+        rule: "regex",
+        value: "^[a-zA-Z0-9_-]+$",
+        errorMessage: "Region only takes alphanumeric characters, underscores, and hyphens",
+      }
     ],
   }, 
   
@@ -101,8 +137,9 @@ const fields = [
     validations: [
      {
   rule: "regex",
-  value: "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$",
-  errorMessage: "Date must be in YYYY-MM-DD format"
+  value: "^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-(\\d{4})$",
+errorMessage: "Date must be in MM-DD-YYYY format"
+
 }
     ],
   },
@@ -115,8 +152,9 @@ const fields = [
     validations: [
     {
   rule: "regex",
-  value: "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$",
-  errorMessage: "Date must be in YYYY-MM-DD format"
+ value: "^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-(\\d{4})$",
+errorMessage: "Date must be in MM-DD-YYYY format"
+
 }
 
     ],
@@ -128,10 +166,11 @@ const fields = [
     fieldType: { type: "input" },
     example: "abcd",
     validations: [
-      {
-        rule: "number",
-        errorMessage: "Number of Nodes needs to be a number",
-      },
+        {
+      rule: "regex",
+      value: "^\\d+$",
+      errorMessage: "Number of Nodes must be a non-negative integer",
+    },
     ],
   },
 
@@ -145,6 +184,11 @@ const fields = [
         rule: "required",
         errorMessage: "Aerial is required",
       },
+        {
+        rule: "regex",
+        value: "^[a-zA-Z0-9_-]+$",
+        errorMessage: "Aerial only takes alphanumeric characters, underscores, and hyphens",
+      }
     ],
   },
 
@@ -154,10 +198,11 @@ const fields = [
     fieldType: { type: "input" },
     example: "abcd",
     validations: [
-      {
-        rule: "number",
-        errorMessage: "Number of ROLTS needs to be a number",
-      },
+        {
+      rule: "regex",
+      value: "^\\d+$",
+      errorMessage: "Number of Nodes must be a non-negative integer",
+    },
     ],
   },
 
@@ -171,6 +216,11 @@ const fields = [
         rule: "required",
         errorMessage: "Market ID is required",
       },
+        {
+        rule: "regex",
+        value: "^[a-zA-Z0-9_-]+$",
+        errorMessage: "Market ID only takes alphanumeric characters, underscores, and hyphens",
+      }
     ],
   },
 
@@ -184,6 +234,11 @@ const fields = [
         rule: "required",
         errorMessage: "Market Order is required",
       },
+        {
+        rule: "regex",
+        value: "^[a-zA-Z0-9_-]+$",
+        errorMessage: "Market Order only takes alphanumeric characters, underscores, and hyphens",
+      }
     ],
   },
 
@@ -207,9 +262,10 @@ const fields = [
     example: "abcd",
     validations: [
       {
-        rule: "number",
-        errorMessage: "DA Number needs to be a number",
-      },
+      rule: "regex",
+      value: "^\\d+$",
+      errorMessage: "Number of Nodes must be a non-negative integer",
+    },
     ],
   },
 ];
@@ -218,12 +274,22 @@ const Comments = () => {
   const [isExcelOpen, setIsExcelOpen] = useState(false);
   const [importedData, setImportedData] = useState([]);
 
- const handleSubmit = (data) => {
+ const handleSubmit = async(data) => {
   console.log("Full submission:", data);
   console.log("Valid rows:", data.validData);
   console.log("Invalid rows:", data.invalidData);
+  
   setImportedData(data.validData);
+
+  try{
+    const response = await axios.post("http://localhost:3000/ProjectExcel",data.validData);
+    console.log("server response",response.data);
+  }
+  catch(error){
+    console.log("Error submitting data:", error);
+  }
 };
+
 
   return (
     <div className="p-4 ml-125">
@@ -233,13 +299,31 @@ const Comments = () => {
       >
         Import Spreadsheet
       </button>
+<ReactSpreadsheetImport
+initialStepState={{ type: StepType.upload }}
+  rowHook={(data, addError) => {
+    const received = new Date(data.RecievedDate);
+    const due = new Date(data.DueDate);
 
-      <ReactSpreadsheetImport
-        isOpen={isExcelOpen}
-        onClose={() => setIsExcelOpen(false)}
-        onSubmit={handleSubmit}
-        fields={fields}
-      />
+    if (due < received) {
+      addError("DueDate", {
+        message: "Due Date cannot be before Received Date",
+        level: "error",
+      });
+    }
+
+    return data;
+  }}
+  isOpen={isExcelOpen}
+  onClose={() => setIsExcelOpen(false)}
+  onSubmit={handleSubmit}
+  fields={fields}
+  isNavigationEnabled={true}
+  
+/>
+
+
+
 
       {importedData.length > 0 && (
         <div className="mt-4">

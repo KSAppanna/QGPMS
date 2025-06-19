@@ -7,6 +7,9 @@ import 'dotenv/config';
 import Message from "../Models/Message.js";
 import Project from "../Models/ProjectInfo.js";
 
+
+import connection from "./dbmysql.js";
+
 const app = express();
 const httpServer = createServer(app);
 const PORT = process.env.PORT || 3000;
@@ -22,6 +25,8 @@ app.use(express.json());
 
 
 connectDB();
+
+
 
 // POST route to save project
 app.post("/Projects", async (req, res) => {
@@ -81,3 +86,13 @@ io.on("connection", async (socket) => {
 httpServer.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+
+
+// endpoint for Project Excel
+
+app.post('/ProjectExcel',(req,res)=>{
+  const recievedData =  req.body;
+  console.log(recievedData);
+  res.status(200).json({message:"Data received successfully"});
+})
