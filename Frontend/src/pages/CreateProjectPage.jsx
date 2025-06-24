@@ -7,7 +7,7 @@ const CreateProjectPage = () => {
     <>
       <div className="pt-10 overflow-hidden relative h-screen w-fulloverflow-y-auto flex-2 basis-0 bg-transparent flex flex-col"> 
         <ProjectInfo />
-        <Comments/>
+        {/* <Comments/> */}
       </div>
     </>
   );

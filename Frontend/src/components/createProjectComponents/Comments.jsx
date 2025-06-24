@@ -274,25 +274,34 @@ const Comments = () => {
   const [isExcelOpen, setIsExcelOpen] = useState(false);
   const [importedData, setImportedData] = useState([]);
 
- const handleSubmit = async(data) => {
-  console.log("Full submission:", data);
-  console.log("Valid rows:", data.validData);
-  console.log("Invalid rows:", data.invalidData);
-  
-  setImportedData(data.validData);
+const [validData, setValidData] = useState([]);
+const [invalidData, setInvalidData] = useState([]);
 
-  try{
-    const response = await axios.post("http://localhost:3000/ProjectExcel",data.validData);
-    console.log("server response",response.data);
-  }
-  catch(error){
-    console.log("Error submitting data:", error);
+const handleSubmit = async (data) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/ProjectExcel",
+      {
+        validData: data.validData
+      }
+    );
+
+    console.log("Valid response data", response.data.validData);
+    console.log("Invalid response data", response.data.invalidData);
+
+    setValidData(response.data.validData);
+    setInvalidData(response.data.invalidData);
+  } catch (error) {
+    console.error("Error submitting Excel data:", error);
   }
 };
 
 
+
+
   return (
-    <div className="p-4 ml-125">
+   <div className="p-4 ml-125 h-[90vh] overflow-y-auto">
+
       <button
         onClick={() => setIsExcelOpen(true)}
         className="px-4 py-2 !  bg-blue-600 text-white rounded hover:bg-blue-700"
@@ -301,6 +310,8 @@ const Comments = () => {
       </button>
 <ReactSpreadsheetImport
 initialStepState={{ type: StepType.upload }}
+  defaultHasHeaderRow={true}
+
   rowHook={(data, addError) => {
     const received = new Date(data.RecievedDate);
     const due = new Date(data.DueDate);
@@ -318,25 +329,66 @@ initialStepState={{ type: StepType.upload }}
   onClose={() => setIsExcelOpen(false)}
   onSubmit={handleSubmit}
   fields={fields}
-  isNavigationEnabled={true}
-  
+ 
+isNavigationEnabled={true}
+ 
+
 />
 
 
 
 
-      {importedData.length > 0 && (
-        <div className="mt-4">
-          <h2 className="text-lg font-semibold">Imported Users:</h2>
-          <ul className="mt-2 list-disc list-inside">
-            {importedData.map((row, index) => (
-              <li key={index}>
-                {row.Program} - {row.JOB_ID} - {row.Job_Name} - {row.SOW}-{row.Worktype} - {row.Division} - {row.Region} - {row.RecievedDate} - {row.DueDate} - {row.No_Nodes} - {row.Aerial} - {row.No_ROLTs} - {row.Market_ID} - {row.Market_Order} - {row.Project_No} - {row.DANumber}
-              </li>
-            ))}
-          </ul>
+      {/* Valid Data */}
+{validData.length > 0 && (
+  <div className="mt-6">
+    <h2 className="text-lg font-bold text-green-600">Valid Data:</h2>
+    <div className="mt-2 max-h-96 overflow-y-auto border border-green-300 rounded p-2">
+  <ul className="list-disc list-inside">
+
+     {validData.map((item, index) => (
+  <li key={index} className="mb-4">
+    <strong>Row {index + 1}:</strong>
+    <div className="ml-4 mt-2 text-sm">
+      {Object.entries(item).map(([key, value]) => (
+        <div key={key} className="flex">
+          <span className="w-32 font-medium">{key}:</span>
+          <span>{value}</span>
         </div>
-      )}
+      ))}
+    </div>
+  </li>
+))}
+    </ul>
+    </div>
+  </div>
+)}
+
+{/* Invalid Data */}
+{invalidData.length > 0 && (
+  <div className="mt-6">
+    <h2 className="text-lg font-bold text-red-600">Invalid Data:</h2>
+    
+    <div className="mt-2 max-h-96 overflow-y-auto border border-gray-300 rounded p-2">
+      <ul className="list-disc list-inside">
+        {invalidData.map((entry, index) => (
+          <li key={index} className="mb-4">
+            <strong>Row {entry.rowNumber}:</strong> {entry.errors.join(', ')}
+            <div className="ml-4 mt-2 text-sm">
+              {Object.entries(entry.row).map(([key, value]) => (
+                <div key={key} className="flex">
+                  <span className="w-32 font-medium">{key}:</span>
+                  <span>{value}</span>
+                </div>
+              ))}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+)}
+
+
     </div>
   );
 };

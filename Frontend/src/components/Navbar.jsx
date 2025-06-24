@@ -6,6 +6,8 @@
   import React, { useState, useEffect, useRef } from 'react';
   import { IoPersonCircleOutline } from "react-icons/io5";
 
+  import Notification from './Notification';
+
   const navigation = [
     { name: 'QGPMS', href: '#', current: false },
     {
@@ -63,11 +65,11 @@
     serverMessages = [],
     notifications,
     setNotifications,
-    handleSubmit,
     handleClearMessages,
     handleProjectCreation,
     msgOpen,
-    setMsgOpen
+    setMsgOpen,
+     socket
   }) {
     const [currentTime, setCurrentTime] = useState('');
     const [open, setOpen] = useState(false);
@@ -75,12 +77,14 @@
     const [activeFilter, setActiveFilter] = useState('All');
     const dropdownRef = useRef(null);
 
-    const markAsRead = (index) => {
-      const updated = [...serverMessages];
-      updated[index].read = true;
-      localStorage.setItem('serverMessages', JSON.stringify(updated));
-      setNotifications(updated);
-    };
+const markAsRead = (index) => {
+  const updated = [...serverMessages];
+  const message = updated[index];
+
+  if (!message.read && socket) {
+    socket.emit("markAsRead", message._id); // emit to backend
+  }
+};
 
     const unreadCount = (serverMessages || []).filter(m => !m.read).length;
     const filteredMessages =
@@ -163,6 +167,9 @@
                 <div className="text-white font-mono drop-shadow-lg text-lg ">{currentTime}</div>
 
                 <div>
+
+
+    {/* Notification Button */}
     <button
       type="button"
       className="relative rounded-full p-1 text-white hover:text-white"
@@ -180,70 +187,17 @@
     </button>
 
 
-    <div
-      className={`absolute right-0 mt-2 w-[360px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg z-50 flex flex-col overflow-hidden transition-all duration-500 ease-in-out ${
-        msgOpen ? "max-h-[90vh] opacity-100" : "max-h-0 opacity-0"
-      }`}
-    >
-      <div className="px-4 pt-4 pb-2">
-        <div className="text-lg font-semibold mb-2">Notifications</div>
-        <div className="flex border-b mb-2 space-x-6 text-sm font-medium text-gray-500">
-          <button
-            className={`pb-2 ${activeFilter === "All" ? "border-b-2 border-blue-600 text-blue-600" : ""}`}
-            onClick={() => setActiveFilter("All")}
-          >
-            All
-          </button>
-          <button
-            className={`pb-2 ${activeFilter === "Unread" ? "border-b-2 border-blue-600 text-blue-600" : ""}`}
-            onClick={() => setActiveFilter("Unread")}
-          >
-            Unread
-            <span className="ml-1 bg-blue-100 text-blue-600 px-1 rounded text-xs">{unreadCount}</span>
-          </button>
-        </div>
-      </div>
-     <div
-  className={classNames(
-    "overflow-y-auto px-4 pb-4 space-y-3 flex-1",
-    "motion-safe:motion-translate-x-in-[19%] motion-safe:motion-translate-y-in-[-23%] motion-safe:motion-duration-[2.25s]"
-  )}
->
-  {[...filteredMessages].reverse().map((msg, idx) => (
-    <div
-      key={idx}
-      className={classNames(
-        "p-3 rounded-md border flex justify-between items-start gap-3",
-        msg.read
-          ? "bg-gray-50 border-gray-200 dark:bg-gray-800 dark:border-gray-700"
-          : "bg-blue-50 border-blue-400 dark:bg-blue-900 dark:border-blue-600"
-      )}
-    >
-      <div className="flex-1">
-        <p className="text-sm text-gray-700 dark:text-gray-200 flex gap-0.5">
-          <IoPersonCircleOutline className="size-5" />
-          {msg.content}
-        </p>
-        <p className="text-xs text-gray-400 mt-1 dark:text-gray-500">
-          {getRelativeTime(msg.timestamp)}
-        </p>
-      </div>
-      {!msg.read && activeFilter !== "Unread" && (
-        <button
-          onClick={() => {
-            const originalIndex = serverMessages.length - 1 - idx;
-            markAsRead(originalIndex);
-          }}
-          className="ml-4 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded px-2 py-1 dark:bg-blue-500 dark:hover:bg-blue-600"
-        >
-          Mark as Read
-        </button>
-      )}
-    </div>
-  ))}
-</div>
-
-    </div>
+   <Notification
+  msgOpen={msgOpen}
+  setMsgOpen={setMsgOpen}
+  activeFilter={activeFilter}
+  setActiveFilter={setActiveFilter}
+  unreadCount={unreadCount}
+  serverMessages={serverMessages}
+  socket={socket}
+  getRelativeTime={getRelativeTime}
+  markAsRead={markAsRead}
+/>
   </div>
 
 

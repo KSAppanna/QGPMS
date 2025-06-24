@@ -80,7 +80,13 @@ const ProjectInfo = () => {
     if (Object.keys(errors).length > 0) return;
 
     try {
-      await axios.post('http://localhost:3000/Projects', formData);
+      const payload = {
+        ...formData,
+        senderId: "userA",
+        receiverId: "userB",
+      };
+
+      await axios.post('http://localhost:3000/Projects', payload);
       toast.success('Data saved successfully!');
       setFormData(initialState);
     } catch (err) {
@@ -93,7 +99,7 @@ const ProjectInfo = () => {
     <div className="w-full sm:w-[95%] mx-auto sm:ml-14">
       <Toaster position="top-center" />
       <div
-        className="bg-gradient-to-r from-blue-500 via-sky-300 to-blue-200 text-white px-3 h-9 rounded-lg flex items-center justify-between cursor-pointer shadow-lg backdrop-blur-md hover:from-blue-600 hover:to-blue-300"
+        className=" mt-2 bg-gradient-to-r from-blue-500 via-sky-300 to-blue-200 text-white px-3 h-9 rounded-lg flex items-center justify-between cursor-pointer shadow-lg backdrop-blur-md hover:from-blue-600 hover:to-blue-300"
         onClick={() => setIsOpen(prev => !prev)}
       >
         <div className="flex items-center w-full">
@@ -111,8 +117,8 @@ const ProjectInfo = () => {
       </div>
 
       <div className={`transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-        <div className="mt-1 p-4 border rounded-lg bg-white dark:bg-gray-800">
-          <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4 max-h-[400px] overflow-y-auto p-2">
+        <div className="mt-1 p-4 rounded-lg bg-white dark:bg-gray-800">
+          <form onSubmit={handleSubmit} className="grid grid-cols-2  sm:grid-cols-3 gap-4 max-h-[400px] overflow-y-auto p-2">
             {fieldConfig.map(({ name, label, type, required, options }) => {
               const value = formData[name];
               const hasError = formErrors[name];
@@ -132,7 +138,7 @@ const ProjectInfo = () => {
                       if (['-', 'e', '.', 'E'].includes(e.key)) e.preventDefault();
                     }
                   : undefined,
-                className: `form-input bg-gray-50 ${borderColor} border rounded transition duration-200 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full p-1 dark:bg-gray-700 dark:text-white min-h-[32px] ${numericFields.has(name) ? 'appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none' : ''}`
+                className: `w-full text-sm rounded-md px-2 h-[32px] bg-gray-50 dark:bg-gray-700 dark:text-white text-gray-900 placeholder-gray-500 transition duration-200 focus:outline-none focus:ring-0 ${borderColor} ${numericFields.has(name) ? 'appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none' : ''}`
               };
 
               return (
@@ -157,45 +163,40 @@ const ProjectInfo = () => {
                         )
                       }}
                       styles={{
-  control: (base, state) => ({
-    ...base,
-    backgroundColor: '#f9fafb', // Tailwind bg-gray-50
-    borderColor: formErrors[name]
-      ? '#ef4444' // red-500
-      : value
-      ? '#22c55e' // green-500
-      : '#d1d5db', // gray-300
-    borderRadius: '0.375rem', // Tailwind rounded-md
-    minHeight: '32px',
-    height: '32px',
-    paddingLeft: '0.5rem',
-    paddingRight: '0.5rem',
-    boxShadow: state.isFocused ? '0 0 0 2px #3b82f6' : 'none', // Tailwind ring-blue-500
-    fontSize: '0.875rem', // text-sm
-    transition: 'all 0.2s ease-in-out',
-  }),
-  valueContainer: (base) => ({
-    ...base,
-    padding: '0 6px',
-  }),
-  indicatorsContainer: (base) => ({
-    ...base,
-    height: '32px',
-  }),
-  dropdownIndicator: (base) => ({
-    ...base,
-    padding: '4px',
-  }),
-  clearIndicator: (base) => ({
-    ...base,
-    padding: '4px',
-  }),
-  placeholder: (base) => ({
-    ...base,
-    color: '#6b7280', // gray-500
-  }),
-}}
-    />
+                        control: (base) => ({
+                          ...base,
+                          backgroundColor: '#f9fafb',
+                          border: 'none',
+                          boxShadow: 'none',
+                          borderRadius: '0.375rem',
+                          minHeight: '32px',
+                          height: '32px',
+                          paddingLeft: '0.5rem',
+                          paddingRight: '0.5rem',
+                          fontSize: '0.875rem',
+                        }),
+                        valueContainer: (base) => ({
+                          ...base,
+                          padding: '0 6px',
+                        }),
+                        indicatorsContainer: (base) => ({
+                          ...base,
+                          height: '32px',
+                        }),
+                        dropdownIndicator: (base) => ({
+                          ...base,
+                          padding: '4px',
+                        }),
+                        clearIndicator: (base) => ({
+                          ...base,
+                          padding: '4px',
+                        }),
+                        placeholder: (base) => ({
+                          ...base,
+                          color: '#6b7280',
+                        }),
+                      }}
+                    />
                   ) : (
                     <div className="relative">
                       <input
@@ -204,6 +205,7 @@ const ProjectInfo = () => {
                         inputMode={numericFields.has(name) ? 'numeric' : undefined}
                         pattern={alphanumericFields.has(name) ? '^[a-zA-Z0-9 ]*$' : undefined}
                         title={alphanumericFields.has(name) ? 'Only alphanumeric characters allowed' : undefined}
+                        placeholder={required ? `Enter ${label.replace(/\*/g, '')}` : label.replace(/\*/g, '')}
                       />
                       {value && !hasError && (
                         <TiTick className="absolute right-2 top-1/2 transform -translate-y-1/2 text-green-500 text-lg" />
@@ -219,7 +221,7 @@ const ProjectInfo = () => {
             })}
 
             <div className="col-span-2 flex justify-end">
-              <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+              <button type="submit" className="mt-5 h-9 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
                 Submit
               </button>
             </div>
