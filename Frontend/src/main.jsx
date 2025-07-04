@@ -7,6 +7,8 @@ import TaskPage from './pages/TaskPage.jsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import OwnerDropdownPage from './pages/OwnerDropdownPage.jsx';
 import CreateProjectPage from './pages/CreateProjectPage.jsx';
+import ExcelPage from './pages/ExcelPage.jsx';
+import MilestonePage from './pages/MilestonePage.jsx'
 import Layout from './Layout.jsx';
 
 import 'primereact/resources/themes/saga-blue/theme.css';
@@ -26,6 +28,8 @@ const router = createBrowserRouter([
       { path: 'Task', element: <TaskPage /> },
       { path: 'Owner', element: <OwnerDropdownPage /> },
       { path: 'CreateProject', element: <CreateProjectPage /> },
+      {path: 'Excel', element: <ExcelPage /> },
+      {path: 'Milestone', element: <MilestonePage /> }
     ],
   },
   {

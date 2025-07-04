@@ -39,7 +39,7 @@ const Layout = () => {
         <div className="h-full">
           <Menubar />
         </div>
-        <main className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
+        <main className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900 ml-14">
           <Outlet />
         </main>
       </div>

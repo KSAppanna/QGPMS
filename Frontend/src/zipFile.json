@@ -1,0 +1,22 @@
+    [
+        {
+            "SNo":"1",
+            "Name":"Project1.zip",
+            "path":"Frontend/public/zip/file1.zip",
+            "Created Date":" ",
+            "Size":"123",
+            "Type":"Zip",
+            "Owner":"sdsd"
+
+        },
+        {
+            "SNo":"2",
+            "Name":"Project2.zip",
+            "path":"Frontend/public/zip/file1.zip",
+            "Created Date":" ",
+            "Size":"123",
+            "Type":"Zip",
+            "Owner":"sdsd"
+
+        }
+    ]
