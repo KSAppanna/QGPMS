@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
-import { Calendar } from '@progress/kendo-react-dateinputs';
+import CustomDatePicker from '../CustomDatePicker';
 
 const Info = () => {
   const [openMilestoneDropDown, setOpenMilestoneDropdown] = useState(false);
@@ -34,52 +34,67 @@ const Info = () => {
     totalTime: "Total Time"
   };
 
-const nonEditableFields = ['jobId', 'sow', 'region', 'country', 'totalTime'];
-
+  const nonEditableFields = ['jobId', 'sow', 'region', 'country', 'totalTime'];
+  const dateFields = ['dueDate', 'submittedDate', 'approvedDate'];
 
   const handleEditToggle = (key) => {
-    setEditableFields(prev => ({ ...prev, [key]: !prev[key] }));   
+    setEditableFields(prev => ({ ...prev, [key]: !prev[key] }));
   };
-
-
 
   const handleChange = (key, value) => {
     setFormData(prev => ({ ...prev, [key]: value }));
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full max-w-5xl mx-auto">
       <div
         onClick={() => setOpenMilestoneDropdown(prev => !prev)}
-        className="bg-gradient-to-r from-blue-500 via-sky-300 to-blue-200 hover:from-blue-600 hover:via-sky-400 hover:to-blue-300 text-white px-3 h-[36px] rounded-lg flex gap-2 items-center cursor-pointer transition-colors shadow-lg backdrop-blur-md bg-opacity-90"
+        className="bg-gradient-to-r from-blue-600 via-sky-500 to-blue-400 hover:from-blue-700 hover:via-sky-600 hover:to-blue-500 text-white px-4 py-2 rounded-lg flex items-center justify-between cursor-pointer shadow-md"
       >
-        <span>{openMilestoneDropDown ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
-        Information
+        <span className="flex items-center gap-2 text-base font-semibold">
+          {openMilestoneDropDown ? <IoIosArrowUp className="text-xl" /> : <IoIosArrowDown className="text-xl" />}
+          Information
+        </span>
       </div>
 
       <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          openMilestoneDropDown ? 'max-h-full opacity-100' : 'max-h-0 opacity-0'
+        className={`transition-all duration-300 ease-in-out ${
+          openMilestoneDropDown ? 'max-h-[2000px] opacity-100 mt-4 ' : 'max-h-0 opacity-0 overflow-hidden'
         }`}
       >
-        <div className="text-black ml-0.5 p-2 rounded shadow">
-          <form className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+        <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-200 dark:bg-gray-800/50 dark:text-white">
+          <form className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {Object.entries(formData).map(([key, value]) => (
-              <div key={key} className="flex flex-col relative">
-                <label className="text-sm font-medium text-gray-600">{labelMap[key]}</label>
-                <input
-                  type={(key === 'submittedDate' || key === 'approvedDate') ? 'date' : 'text'}
-                  value={value || "-"}
-                  readOnly={!editableFields[key]}
-                  onChange={(e) => handleChange(key, e.target.value)}
-                  className={`mt-1 px-2 py-1 pr-8 border text-sm rounded focus:outline-none ${
-                    editableFields[key] ? 'bg-white border-blue-400' : 'bg-gray-100 border-gray-300'
-                  }`}
-                />
-                {!nonEditableFields.includes(key) && (
+              <div key={key} className="relative">
+                <label className="text-sm font-medium text-gray-600 block mb-1 dark:text-white">
+                  {labelMap[key]}
+                </label>
+
+              {dateFields.includes(key) ? (
+  <CustomDatePicker
+    value={value}
+    onChange={(newVal) => handleChange(key, newVal)}
+    editable={editableFields[key]}
+  />
+) : (
+  <input
+    type="text"
+    value={value || "-"}
+    readOnly={!editableFields[key]}
+    onChange={(e) => handleChange(key, e.target.value)}
+    className={`w-full px-3 py-2 text-sm rounded-md border transition focus:outline-none dark:bg-gray-700/50 dark:border-none   ${
+      editableFields[key]
+        ? 'bg-white border-blue-400 focus:ring-2 focus:ring-blue-300 pr-8 mt-1'
+        : 'bg-gray-100 border-gray-300 cursor-not-allowed mt-1'
+    }`}
+  />
+)}
+
+                {!nonEditableFields.includes(key) && !dateFields.includes(key)&&(
                   <CiEdit
-                    className="absolute right-2 top-[32px] text-gray-500 cursor-pointer"
+                    className="absolute right-2 top-[38px] text-gray-500 dark:bg-gray-800/50   hover:text-blue-500 cursor-pointer transition"
                     onClick={() => handleEditToggle(key)}
+                    title="Edit Field"
                   />
                 )}
               </div>

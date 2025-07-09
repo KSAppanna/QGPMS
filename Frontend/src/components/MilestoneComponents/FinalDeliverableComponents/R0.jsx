@@ -65,7 +65,7 @@ const R0 = () => {
         
               <div
           className={`transition-all duration-300 ease-in-out overflow-hidden ${
-            openR0 ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
+            openR0 ? 'max-h-[1000px] opacity-100 mt-4' : 'max-h-0 opacity-0'
           }`}
         >
           <div className="mt-2 p-2 rounded shadow bg-white">

@@ -5,6 +5,7 @@ import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import zipFileData from '../../zipFile.json';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 import InputMilestoneTable from './InputMilestoneTable';
+import FileExtensionIcon from '../FileExtensionIcon';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -20,7 +21,6 @@ const InputFiles = () => {
       SNo: item.SNo || idx + 1,
       'Created Date': item['Created Date'] || '',
       Size: item.Size || '',
-      Type: item.Type || '',
       Owner: item.Owner || '',
       path: item.path || '',
     }));
@@ -69,7 +69,7 @@ const InputFiles = () => {
 
       <div
         className={`transition-all duration-300 ease-in-out overflow-hidden ${
-          openInputFiles ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
+          openInputFiles ? 'max-h-[1000px] opacity-100 mt-4' : 'max-h-0 opacity-0'
         }`}
       >
         <div className="mt-2 p-2 rounded shadow bg-white">

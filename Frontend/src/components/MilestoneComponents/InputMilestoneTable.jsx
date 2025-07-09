@@ -1,8 +1,8 @@
-// File: InputMilestoneTable.js
+
 
 import React from 'react';
 import { AgGridReact } from 'ag-grid-react';
-
+import FileExtensionIcon from '../FileExtensionIcon';
 const InputMilestoneTable = ({ rowData, selectedFiles, updateSelection, handleDownload, handleDelete }) => {
   const colDefs = [
     {
@@ -21,30 +21,75 @@ const InputMilestoneTable = ({ rowData, selectedFiles, updateSelection, handleDo
           />
         );
       },
-      width: 60
+      width: 60,
+
     },
     { field: 'SNo', headerName: 'S.No' },
     { field: 'Name', headerName: 'Name' },
     { field: 'Created Date', headerName: 'Created Date' },
     { field: 'Size', headerName: 'Size' },
-    { field: 'Type', headerName: 'Type' },
-    { field: 'Owner', headerName: 'Owner' }
+    {
+  headerName: 'Type',
+  field: 'Name',
+  cellRenderer: (params) => {
+    const name = params.data.Name || '';
+    const extension = name.includes('.') ? name.split('.').pop().toLowerCase() : 'file';
+
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100%',
+          backgroundColor: 'white',
+          borderRadius: '6px',
+        }}
+      >
+        <div style={{ width: 20, height: 20 }}>
+          <img
+            src={`/images/icons/${extension}.png`}
+            alt={extension}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = '/images/icons/file.png'; // fallback icon
+            }}
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+          />
+        </div>
+      </div>
+    );
+  },
+  width: 60,
+  suppressMenu: true,
+  sortable: false,
+  filter: false,
+}
+,
+
+    { field: 'Owner', headerName: 'Owner' },
+
+
+
+
   ];
 
 return (
   <>
-    <div className="ag-theme-balham w-full overflow-y-auto" style={{ height: '100px' }}>
-      <AgGridReact
-        rowData={rowData}
-        columnDefs={colDefs}
-        animateRows={true}
-        defaultColDef={{
-          sortable: true,
-          filter: true,
-          resizable: true,
-          editable: false
-        }}
-      />
+    <div className="ag-theme-quartz w-full overflow-y-auto" style={{ height: '100px' }}>
+    <AgGridReact
+  rowData={rowData}
+  columnDefs={colDefs}
+  animateRows={true}
+  getRowHeight={() => 30} 
+  defaultColDef={{
+    sortable: true,
+    filter: true,
+    resizable: true,
+    editable: false,
+  }}
+/>
+
     </div>
 
     {selectedFiles.length > 0 && (

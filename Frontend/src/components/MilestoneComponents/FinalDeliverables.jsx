@@ -27,7 +27,7 @@ const FinalDeliverables = () => {
         {/* Expandable Content */}
         <div
           className={`transition-all duration-300 ease-in-out ${
-            openFinalDeliverables ? 'max-h-[70vh] opacity-100' : 'max-h-0 opacity-0'
+            openFinalDeliverables ? 'max-h-[1000px] opacity-100 mt-4' : 'max-h-0 opacity-0'
           } overflow-auto`}
         >
           <div className="text-black ml-0.5 p-2 rounded shadow flex flex-col gap-2">

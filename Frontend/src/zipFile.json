@@ -1,11 +1,11 @@
     [
         {
             "SNo":"1",
-            "Name":"Project1.zip",
+            "Name":"Project1.xlsx",
             "path":"Frontend/public/zip/file1.zip",
             "Created Date":" ",
             "Size":"123",
-            "Type":"Zip",
+            "Type":"pdf",
             "Owner":"sdsd"
 
         },
@@ -15,7 +15,7 @@
             "path":"Frontend/public/zip/file1.zip",
             "Created Date":" ",
             "Size":"123",
-            "Type":"Zip",
+            "Type":"zip",
             "Owner":"sdsd"
 
         }
