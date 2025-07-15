@@ -3,6 +3,7 @@
 import React from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import FileExtensionIcon from '../FileExtensionIcon';
+import { themeMaterial } from 'ag-grid-community'
 const InputMilestoneTable = ({ rowData, selectedFiles, updateSelection, handleDownload, handleDelete }) => {
   const colDefs = [
     {
@@ -49,10 +50,10 @@ const InputMilestoneTable = ({ rowData, selectedFiles, updateSelection, handleDo
         <div style={{ width: 20, height: 20 }}>
           <img
             src={`/images/icons/${extension}.png`}
-            alt={extension}
+            alt={`/images/icons/rar.png`}
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = '/images/icons/file.png'; // fallback icon
+              e.target.src = '/images/icons/file.png';
             }}
             style={{ width: '100%', height: '100%', objectFit: 'contain' }}
           />
@@ -76,8 +77,9 @@ const InputMilestoneTable = ({ rowData, selectedFiles, updateSelection, handleDo
 
 return (
   <>
-    <div className="ag-theme-quartz w-full overflow-y-auto" style={{ height: '100px' }}>
+    <div className=" w-full overflow-y-auto h-[200px]" >
     <AgGridReact
+    theme={themeMaterial}
   rowData={rowData}
   columnDefs={colDefs}
   animateRows={true}
@@ -88,6 +90,7 @@ return (
     resizable: true,
     editable: false,
   }}
+  pagination={true}
 />
 
     </div>

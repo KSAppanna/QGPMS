@@ -8,7 +8,7 @@ const Info = () => {
   const [editableFields, setEditableFields] = useState({});
   const [formData, setFormData] = useState({
     jobId: "JOB-20250625-001",
-    dueDate: "2025-07-01",
+    dueDate: "07-23-2024",
     owner: "Vinod Kumar Chinta",
     status: "In Progress",
     sow: "SOW-QGPMS-4432",
